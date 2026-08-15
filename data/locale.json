@@ -1,0 +1,22 @@
+{
+  "default_language": "en-GB",
+  "default_market": "INTL",
+  "storage_key": "cm:visitor-prefs",
+  "unknown_country_codes": ["XX", "T1", ""],
+  "languages": [
+    {
+      "code": "en-GB",
+      "complete": true,
+      "label": "English"
+    }
+  ],
+  "markets": [
+    { "code": "INTL", "label": "International" },
+    { "code": "GB", "label": "United Kingdom" },
+    { "code": "US", "label": "United States" },
+    { "code": "IE", "label": "Ireland" },
+    { "code": "AU", "label": "Australia" },
+    { "code": "CA", "label": "Canada" },
+    { "code": "NZ", "label": "New Zealand" }
+  ]
+}

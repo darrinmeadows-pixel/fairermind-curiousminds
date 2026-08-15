@@ -1,0 +1,7 @@
+/q/*
+  X-Robots-Tag: noindex, follow
+  Cache-Control: public, max-age=300, must-revalidate
+
+/api/visitor-context
+  Cache-Control: private, no-store
+  X-Content-Type-Options: nosniff

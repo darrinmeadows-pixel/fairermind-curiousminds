@@ -1,0 +1,32 @@
+{
+  "qr_routes": {
+    "5-10/fish-breathe-underwater": {
+      "age_band": "5-10",
+      "slug": "fish-breathe-underwater",
+      "book_id": "CM-Y05to10-STO-SCI-BEACH",
+      "permanent_path": "/q/5-10/fish-breathe-underwater",
+      "indexable": false
+    }
+  },
+  "books": {
+    "CM-Y05to10-STO-SCI-BEACH": {
+      "id": "CM-Y05to10-STO-SCI-BEACH",
+      "title": "Why Can Fish Breathe Underwater?",
+      "age_band": "5-10",
+      "age_minimum": 5,
+      "age_maximum": 10,
+      "topics": ["science", "nature"],
+      "cover_image": null,
+      "public_page": null,
+      "same_age_books": [],
+      "similar_science_books": [],
+      "similar_nature_books": [],
+      "teacher_notes": [],
+      "parent_carer_guidance": [],
+      "retailers_by_market": {},
+      "affiliate_links_by_market": {},
+      "affiliate_disclosure": null,
+      "affiliate_authorised": false
+    }
+  }
+}

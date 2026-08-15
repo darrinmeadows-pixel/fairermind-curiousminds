@@ -16,10 +16,9 @@ Do not publish internal project paths, project identifiers, production assets, o
 
 ## Stack
 
-- Static HTML and CSS only
-- No framework
-- No build step
-- No JavaScript required for this version
+- Static HTML and CSS
+- No JavaScript required for the core page
+- Optional Cloudflare Pages Function at `/api/visitor-context` for coarse country/market detection
 - Self-hosted Montserrat (no Google Fonts or CDN fonts)
 
 ## Local preview
@@ -27,12 +26,28 @@ Do not publish internal project paths, project identifiers, production assets, o
 From this directory:
 
 ```bash
-python3 -m http.server 8081
+python3 -m http.server 8081 --bind 127.0.0.1
 ```
 
 Then open [http://127.0.0.1:8081/](http://127.0.0.1:8081/).
 
+Permanent Book 002 QR destination (local, ages 5–10 edition):
+
+[http://127.0.0.1:8081/q/5-10/fish-breathe-underwater/](http://127.0.0.1:8081/q/5-10/fish-breathe-underwater/)
+
 If port 8081 is busy, choose another free port.
+
+This ordinary static server cannot execute Cloudflare Pages Functions. On localhost, country detection therefore falls back to `INTL`. The visible country selector still works.
+
+Production uses a same-origin Pages Function at `/api/visitor-context`. It reads only Cloudflare’s `request.cf.country` value and returns `{"country":"GB"}` or `{"country":"INTL"}`. The application does not use `/cdn-cgi/trace`.
+
+Checks:
+
+```bash
+node tests/test_locale.js
+node tests/test_visitor_context.mjs
+python3 tests/test_qr_landing.py
+```
 
 ## Current status
 

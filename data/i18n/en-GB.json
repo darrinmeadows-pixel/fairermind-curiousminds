@@ -1,0 +1,45 @@
+{
+  "language": "en-GB",
+  "complete": true,
+  "site": {
+    "name": "Curious Minds",
+    "skip_to_content": "Skip to content",
+    "home_aria": "Curious Minds home",
+    "fairermind_aria": "FairerMind homepage",
+    "nav_label": "Primary",
+    "nav_about": "About",
+    "nav_books": "Books",
+    "nav_contact": "Contact",
+    "footer_nav_label": "Footer",
+    "fairermind": "FairerMind",
+    "copyright": "Copyright © 2026 FairerMind",
+    "rights": "All Rights Reserved."
+  },
+  "qr": {
+    "welcome": "You’ve arrived here by scanning the QR code in the ages 5–10 edition of “Why Can Fish Breathe Underwater?”",
+    "eyebrow": "Ages 5–10 edition",
+    "region_label": "Country or region",
+    "region_automatic": "Automatic",
+    "use_automatic": "Use automatic region",
+    "current_region": "Current region",
+    "contact_prompt": "If you would like to get in touch, email"
+  },
+  "books": {
+    "CM-Y05to10-STO-SCI-BEACH": {
+      "title": "Why Can Fish Breathe Underwater?",
+      "age_range": "5–10",
+      "age_label": "Ages 5–10",
+      "category": "Science and nature",
+      "description": "A Curious Minds story about exploring rock pools and discovering how fish take oxygen from the water using their gills."
+    }
+  },
+  "optional_headings": {
+    "same_age": "More Curious Minds books for ages 5–10",
+    "similar_science": "Similar available science books",
+    "similar_nature": "Similar available nature books",
+    "teacher_notes": "Teacher notes",
+    "parent_guidance": "Guidance for parents and carers",
+    "where_to_find": "Where to find this book",
+    "affiliate_disclosure": ""
+  }
+}
