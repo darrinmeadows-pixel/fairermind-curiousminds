@@ -23,7 +23,7 @@ Canonical **publishing book IDs** are used on purpose for catalogue and analytic
 - Cloudflare Pages Functions:
   - `/api/visitor-context` — coarse country/market detection (`request.cf.country` only)
   - `/api/events` — aggregate `page_view` / `amazon_click` events
-  - `/go/amazon/:bookId` — catalogue-only Amazon redirect with optional click count
+  - `/go/amazon/:bookId` — catalogue-only Amazon redirect with click recording
 - Self-hosted Montserrat (no Google Fonts or CDN fonts)
 
 ## Book status (website)
@@ -39,14 +39,58 @@ Shop destinations live only in `data/catalogue.json` (`retailers_by_market` + `f
 
 Curious Minds counts book interest without identifying visitors.
 
-Event fields:
+### Production Analytics Engine identifiers
 
-- `book_id` — canonical publishing ID
-- `event_type` — `page_view` or `amazon_click`
-- `source` — `home`, `qr`, `book`, or `related`
-- `market` — `GB`, `US`, `INTL`, and other allowlisted markets
-- `format` — for `amazon_click`: `paperback` or `kindle` (extensible allowlist). Empty for `page_view`.
-- platform timestamp from Cloudflare Analytics Engine
+| Item | Value |
+|------|--------|
+| Cloudflare Pages binding | **`CM_EVENTS`** |
+| Analytics Engine dataset | **`curious_minds_events`** |
+
+Keep these names stable. Do not invent parallel bindings or datasets without updating this README and the write path in `functions/lib/cm-events.js`.
+
+### Production verification (Amazon click tracking)
+
+Confirmed working on the live site after a successful Cloudflare Pages deployment:
+
+- Analytics Engine enabled for the project
+- Binding **`CM_EVENTS`** → dataset **`curious_minds_events`**
+- A real shop click from [curiousminds.fairermind.com](https://curiousminds.fairermind.com/) redirected to Amazon
+- The corresponding aggregate event appeared in Analytics Engine
+
+Verified event fields included:
+
+| Field | Confirmed value |
+|-------|-----------------|
+| `event_type` | `amazon_click` |
+| `source` | `home` |
+| `market` | `GB` |
+| `format` | `paperback` |
+| count (`double1`) | `1` |
+| book / catalogue id | recorded (canonical publishing ID, e.g. `CM-Y02to05-STO-SCI-MOON`) |
+
+### Write architecture
+
+Public pages never talk to Analytics Engine directly.
+
+1. Book pages with `data-track-page-view` beacon `page_view` to `/api/events`
+2. Shop CTAs use `/go/amazon/<book-id>?market=…&format=…&src=…`
+3. Pages Functions validate allowlisted fields, then write via **`CM_EVENTS`** into **`curious_minds_events`**
+4. Amazon redirects still succeed if the write fails
+
+### Analytics Engine field mapping
+
+Written by `functions/lib/cm-events.js`:
+
+| AE column | Meaning |
+|-----------|---------|
+| `index1` | `book_id` (sampling key) |
+| `blob1` | `book_id` |
+| `blob2` | `event_type` (`page_view` \| `amazon_click`) |
+| `blob3` | `source` (`home` \| `qr` \| `book` \| `related`) |
+| `blob4` | `market` (`GB`, `US`, `INTL`, …) |
+| `blob5` | `format` (`paperback` \| `kindle`, or empty for page views) |
+| `double1` | count unit (`1`) |
+| `timestamp` | platform ingest time |
 
 Not collected: IP, user ID, email, city/coordinates, user-agent fingerprint, Amazon account data, analytics cookies, Google Analytics, or Cloudflare Web Analytics snippets.
 
@@ -71,20 +115,9 @@ The Function:
 
 If analytics is unavailable, a valid Amazon redirect still proceeds. If no catalogue Amazon URL exists for that book/market/format, the Function returns a safe HTML error page.
 
-### Cloudflare Analytics Engine binding
-
-Production binding name: **`CM_EVENTS`**
-
 Local static preview and unbound Functions degrade gracefully (`binding_unavailable`). Site pages still render.
 
-Dashboard setup still required (not done from this repository):
-
-1. Open the Cloudflare Pages project for this site
-2. Create / enable an Analytics Engine dataset
-3. Bind it to the Pages project as `CM_EVENTS`
-4. Redeploy so `/api/events` and `/go/amazon/*` can write datapoints
-
-`_routes.json` already includes `/api/visitor-context`, `/api/events`, and `/go/amazon/*`.
+`_routes.json` (deployed) includes `/api/visitor-context`, `/api/events`, and `/go/amazon/*`.
 
 ## Local preview
 
@@ -127,7 +160,7 @@ Visual shell follows `Brand/FAIRERMIND_SITE_SHELL.md`, with PetCarePro and Money
 
 1. Run the checks above
 2. Review content, accessibility and responsive layout
-3. Configure the `CM_EVENTS` Analytics Engine binding in Cloudflare Pages
+3. Confirm production still uses binding **`CM_EVENTS`** → dataset **`curious_minds_events`**
 4. Push and deploy to `curiousminds.fairermind.com` when asked
 
 Do not commit or deploy until explicitly asked.

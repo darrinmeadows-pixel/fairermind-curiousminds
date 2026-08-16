@@ -1,0 +1,235 @@
+/* Admin analytics report — Curious Minds */
+
+.admin-analytics-page {
+  background: var(--gradient-hero);
+  min-height: 100vh;
+}
+
+.admin-header .admin-badge {
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--teal-dark);
+  color: var(--text-on-teal);
+  font-size: 0.75rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-main {
+  padding: var(--space-lg) 0 var(--space-2xl);
+}
+
+.admin-hero h1 {
+  margin: 0 0 var(--space-xs);
+  color: var(--text-primary);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.admin-lead {
+  margin: 0 0 var(--space-xs);
+  max-width: 40rem;
+  color: var(--text-muted);
+}
+
+.admin-updated {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0 var(--space-md);
+  padding: var(--space-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-filters fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-filters__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.admin-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: var(--weight-medium);
+  color: var(--text-body);
+}
+
+.admin-chip input {
+  margin: 0;
+}
+
+.admin-chip:has(input:checked) {
+  border-color: var(--teal-primary);
+  background: var(--teal-tint);
+  color: var(--text-primary);
+}
+
+.admin-status {
+  margin: 0 0 var(--space-md);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.admin-status--error {
+  color: #8a1f1f;
+}
+
+.admin-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.admin-card {
+  margin: 0;
+  padding: var(--space-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-card h3 {
+  margin: 0 0 var(--space-xs);
+  font-size: 0.875rem;
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+}
+
+.admin-card__value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.admin-section {
+  margin-top: var(--space-lg);
+}
+
+.admin-section h2 {
+  margin: 0 0 var(--space-sm);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.admin-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+}
+
+.admin-table tbody tr {
+  cursor: pointer;
+}
+
+.admin-table tbody tr:hover,
+.admin-table tbody tr.is-selected {
+  background: var(--teal-tint);
+}
+
+.admin-table code {
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.admin-table--compact th,
+.admin-table--compact td {
+  padding: 0.55rem 0.75rem;
+}
+
+.admin-detail-label {
+  margin: 0 0 var(--space-sm);
+  color: var(--text-body);
+  font-weight: var(--weight-medium);
+}
+
+.admin-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.admin-detail-grid > div {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-detail-grid h3 {
+  margin: 0 0 var(--space-xs);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.admin-note {
+  margin: 0 0 var(--space-xs);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.admin-footer {
+  margin-top: 0;
+}
+
+@media (max-width: 800px) {
+  .admin-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

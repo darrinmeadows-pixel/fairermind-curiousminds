@@ -3,6 +3,7 @@
   "include": [
     "/api/visitor-context",
     "/api/events",
+    "/api/admin/analytics",
     "/go/amazon/*"
   ],
   "exclude": []

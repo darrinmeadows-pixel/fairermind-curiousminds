@@ -14,3 +14,13 @@
   Cache-Control: private, no-store
   X-Content-Type-Options: nosniff
   X-Robots-Tag: noindex
+
+/api/admin/analytics
+  Cache-Control: private, no-store
+  X-Content-Type-Options: nosniff
+  X-Robots-Tag: noindex, nofollow
+
+/admin/*
+  Cache-Control: private, no-store
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Private Curious Minds book analytics report for FairerMind operators.">
+  <title>Book Analytics | Curious Minds Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/admin-analytics.css">
+</head>
+<body class="admin-analytics-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header admin-header">
+    <div class="container site-header__inner">
+      <div class="brand">
+        <a class="brand__logo-link" href="/" aria-label="Curious Minds home">
+          <img
+            class="brand__logo"
+            src="/assets/logos/FairerMind-CuriousMinds.png"
+            alt=""
+            width="66"
+            height="66"
+          >
+        </a>
+        <span class="brand__lockup">
+          <span class="brand__wordmark">
+            <span class="brand__fairer">Fairer</span><span class="brand__mind">Mind</span>
+          </span>
+          <span class="brand__sep" aria-hidden="true">·</span>
+          <span class="brand__product">Curious Minds</span>
+        </span>
+      </div>
+      <p class="admin-badge">Admin</p>
+    </div>
+  </header>
+
+  <main id="main" class="admin-main">
+    <div class="container">
+      <header class="admin-hero">
+        <p class="eyebrow">Curious Minds</p>
+        <h1>Book Analytics</h1>
+        <p class="admin-lead">
+          Aggregate book-page views and Amazon shop clicks. No visitor identities.
+        </p>
+        <p class="admin-updated">
+          Last updated: <time id="report-updated" datetime="">—</time>
+        </p>
+      </header>
+
+      <form id="range-form" class="admin-filters" method="get" action="/admin/analytics/">
+        <fieldset>
+          <legend class="visually-hidden">Time range</legend>
+          <div class="admin-filters__options" role="group" aria-label="Time range">
+            <label class="admin-chip">
+              <input type="radio" name="range" value="today">
+              <span>Today</span>
+            </label>
+            <label class="admin-chip">
+              <input type="radio" name="range" value="7d">
+              <span>Last 7 days</span>
+            </label>
+            <label class="admin-chip">
+              <input type="radio" name="range" value="30d" checked>
+              <span>Last 30 days</span>
+            </label>
+            <label class="admin-chip">
+              <input type="radio" name="range" value="all">
+              <span>All time</span>
+            </label>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn btn--primary">Update report</button>
+      </form>
+
+      <p id="report-status" class="admin-status" role="status" aria-live="polite">Loading report…</p>
+
+      <section class="admin-summary" aria-labelledby="summary-heading">
+        <h2 id="summary-heading" class="visually-hidden">Summary</h2>
+        <div class="admin-cards">
+          <article class="admin-card">
+            <h3>Total page views</h3>
+            <p class="admin-card__value" id="sum-page-views">—</p>
+          </article>
+          <article class="admin-card">
+            <h3>Total Amazon clicks</h3>
+            <p class="admin-card__value" id="sum-amazon-clicks">—</p>
+          </article>
+          <article class="admin-card">
+            <h3>Books with activity</h3>
+            <p class="admin-card__value" id="sum-books-active">—</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="admin-section" aria-labelledby="books-heading">
+        <h2 id="books-heading">Per book</h2>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="books-table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Book ID</th>
+                <th scope="col">Page views</th>
+                <th scope="col">Amazon clicks</th>
+                <th scope="col">Click / view</th>
+                <th scope="col">Most recent</th>
+              </tr>
+            </thead>
+            <tbody id="books-body">
+              <tr>
+                <td colspan="6">Loading…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-section" id="detail-section" hidden aria-labelledby="detail-heading">
+        <h2 id="detail-heading">Detail breakdown</h2>
+        <p id="detail-book-label" class="admin-detail-label"></p>
+        <div class="admin-detail-grid">
+          <div>
+            <h3>By source</h3>
+            <table class="admin-table admin-table--compact">
+              <thead><tr><th scope="col">Source</th><th scope="col">Count</th></tr></thead>
+              <tbody id="detail-source"></tbody>
+            </table>
+          </div>
+          <div>
+            <h3>By market</h3>
+            <table class="admin-table admin-table--compact">
+              <thead><tr><th scope="col">Market</th><th scope="col">Count</th></tr></thead>
+              <tbody id="detail-market"></tbody>
+            </table>
+          </div>
+          <div>
+            <h3>By format</h3>
+            <p class="admin-note">Amazon clicks only. Kindle is shown as ebook.</p>
+            <table class="admin-table admin-table--compact">
+              <thead><tr><th scope="col">Format</th><th scope="col">Count</th></tr></thead>
+              <tbody id="detail-format"></tbody>
+            </table>
+          </div>
+          <div>
+            <h3>By event</h3>
+            <table class="admin-table admin-table--compact">
+              <thead><tr><th scope="col">Event</th><th scope="col">Count</th></tr></thead>
+              <tbody id="detail-event"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer admin-footer">
+    <div class="container">
+      <p class="footer-privacy">
+        This private report uses aggregate first-party events only. It does not identify visitors.
+      </p>
+      <p class="footer-copy">
+        Copyright &copy; 2026 FairerMind<br>
+        All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="/js/cm-admin-analytics.js" defer></script>
+</body>
+</html>

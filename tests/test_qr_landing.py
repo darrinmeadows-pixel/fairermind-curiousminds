@@ -176,7 +176,12 @@ assert "console.log" not in function_js
 assert "document.cookie" not in analytics_js
 assert "gtag" not in analytics_js.lower()
 assert "/api/events" in analytics_js
-assert routes["include"] == ["/api/visitor-context", "/api/events", "/go/amazon/*"]
+assert routes["include"] == [
+    "/api/visitor-context",
+    "/api/events",
+    "/api/admin/analytics",
+    "/go/amazon/*",
+]
 assert os.path.isfile(os.path.join(ROOT, "functions", "api", "visitor-context.js"))
 assert not os.path.exists(os.path.join(ROOT, "functions", "lib", "country.js"))
 
