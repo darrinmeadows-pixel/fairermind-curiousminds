@@ -124,7 +124,7 @@
     hideEmpty("similar-nature", window.CMLocale.visibleItems(book.similar_nature_books));
     hideEmpty("teacher-notes", window.CMLocale.visibleItems(book.teacher_notes));
     hideEmpty("parent-guidance", window.CMLocale.visibleItems(book.parent_carer_guidance));
-    hideEmpty("where-to-find", window.CMLocale.retailerLinks(book, country));
+    hideEmpty("where-to-find", window.CMLocale.retailerLinks(book, country, { source: "qr" }));
     hideEmpty("affiliate-block", window.CMLocale.affiliateLinks(book, country));
   }
 

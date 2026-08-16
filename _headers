@@ -5,3 +5,12 @@
 /api/visitor-context
   Cache-Control: private, no-store
   X-Content-Type-Options: nosniff
+
+/api/events
+  Cache-Control: private, no-store
+  X-Content-Type-Options: nosniff
+
+/go/amazon/*
+  Cache-Control: private, no-store
+  X-Content-Type-Options: nosniff
+  X-Robots-Tag: noindex

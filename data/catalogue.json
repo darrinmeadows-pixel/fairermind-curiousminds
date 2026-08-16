@@ -9,6 +9,36 @@
     }
   },
   "books": {
+    "CM-Y02to05-STO-SCI-MOON": {
+      "id": "CM-Y02to05-STO-SCI-MOON",
+      "title": "Why Does the Moon Change Shape?: Understanding Moon Phases",
+      "age_band": "2-5",
+      "age_minimum": 2,
+      "age_maximum": 5,
+      "topics": ["science", "nature"],
+      "cover_image": null,
+      "public_page": null,
+      "same_age_books": [],
+      "similar_science_books": [],
+      "similar_nature_books": [],
+      "teacher_notes": [],
+      "parent_carer_guidance": [],
+      "retailers_by_market": {
+        "GB": [
+          {
+            "title": "Paperback — Amazon UK",
+            "format": "paperback",
+            "href": "https://www.amazon.co.uk/dp/B0HDSXDYF4"
+          }
+        ]
+      },
+      "affiliate_links_by_market": {},
+      "affiliate_disclosure": null,
+      "affiliate_authorised": false,
+      "publication_status": "live",
+      "amazon_live": true,
+      "notes": "GB paperback live. Kindle destination left empty until a verified Amazon UK Kindle URL is supplied."
+    },
     "CM-Y05to10-STO-SCI-BEACH": {
       "id": "CM-Y05to10-STO-SCI-BEACH",
       "title": "Why Can Fish Breathe Underwater?",
@@ -23,10 +53,26 @@
       "similar_nature_books": [],
       "teacher_notes": [],
       "parent_carer_guidance": [],
-      "retailers_by_market": {},
+      "retailers_by_market": {
+        "GB": [
+          {
+            "title": "Paperback — Amazon UK",
+            "format": "paperback",
+            "href": "https://www.amazon.co.uk/dp/B0HFFYSJPY"
+          },
+          {
+            "title": "Kindle — Amazon UK",
+            "format": "kindle",
+            "href": "https://www.amazon.co.uk/dp/B0HFF176XT"
+          }
+        ]
+      },
       "affiliate_links_by_market": {},
       "affiliate_disclosure": null,
-      "affiliate_authorised": false
+      "affiliate_authorised": false,
+      "publication_status": "live",
+      "amazon_live": true,
+      "notes": "GB paperback and Kindle destinations verified. Shop CTAs must use /go/amazon redirects only."
     }
   }
 }

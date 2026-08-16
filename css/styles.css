@@ -714,6 +714,14 @@ ul {
   font-weight: var(--weight-semibold);
 }
 
+.footer-privacy {
+  margin: 0 0 var(--space-sm);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 22rem;
+}
+
 .footer-copy {
   margin: 0;
   font-size: 0.8125rem;
@@ -878,6 +886,14 @@ ul {
 
 .book-teaser .hero__actions {
   margin-top: var(--space-md);
+}
+
+.book-purchase {
+  margin-top: var(--space-md);
+}
+
+.book-teaser .book-purchase + .hero__actions {
+  margin-top: var(--space-sm);
 }
 
 @media (prefers-reduced-motion: reduce) {

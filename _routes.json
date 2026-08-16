@@ -1,5 +1,9 @@
 {
   "version": 1,
-  "include": ["/api/visitor-context"],
+  "include": [
+    "/api/visitor-context",
+    "/api/events",
+    "/go/amazon/*"
+  ],
   "exclude": []
 }

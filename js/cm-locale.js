@@ -149,6 +149,29 @@
     return url;
   }
 
+  var SHOP_FORMATS = ["paperback", "kindle"];
+
+  function normaliseShopFormat(raw) {
+    if (raw === null || raw === undefined || raw === "") return null;
+    var value = String(raw).trim().toLowerCase();
+    if (SHOP_FORMATS.indexOf(value) === -1) return null;
+    return value;
+  }
+
+  function amazonGoHref(bookId, market, format, source) {
+    var src = source || "book";
+    return (
+      "/go/amazon/" +
+      encodeURIComponent(bookId) +
+      "?market=" +
+      encodeURIComponent(market) +
+      "&format=" +
+      encodeURIComponent(format) +
+      "&src=" +
+      encodeURIComponent(src)
+    );
+  }
+
   function visibleItems(items) {
     if (!items || !items.length) return [];
     var out = [];
@@ -168,13 +191,48 @@
     return out;
   }
 
-  function retailerLinks(book, country) {
+  /**
+   * Retailer CTAs for a book/market. Amazon format entries become same-origin
+   * /go/amazon paths so raw Amazon product URLs stay catalogue-only.
+   */
+  function retailerLinks(book, country, options) {
     if (!book || !isObject(book.retailers_by_market)) return [];
+    var source = options && options.source ? String(options.source) : "book";
     var marketLinks = book.retailers_by_market[country] || [];
-    var items = visibleItems(marketLinks);
-    if (items.length) return items;
-    if (country !== FALLBACK_MARKET) return [];
-    return visibleItems(book.retailers_by_market[FALLBACK_MARKET] || []);
+    if ((!marketLinks || !marketLinks.length) && country !== FALLBACK_MARKET) {
+      return [];
+    }
+    if ((!marketLinks || !marketLinks.length) && country === FALLBACK_MARKET) {
+      marketLinks = book.retailers_by_market[FALLBACK_MARKET] || [];
+    }
+    if (!marketLinks || !marketLinks.length) return [];
+
+    var out = [];
+    var bookId = book.id || book.book_id;
+    for (var i = 0; i < marketLinks.length; i++) {
+      var item = marketLinks[i];
+      if (!item || !item.title) continue;
+      var format = normaliseShopFormat(item.format);
+      var href = item.href || item.url;
+      if (format && bookId && httpsUrl(href)) {
+        out.push({
+          title: item.title,
+          href: amazonGoHref(bookId, country, format, source),
+          external: false,
+          format: format
+        });
+        continue;
+      }
+      var abs = httpsUrl(href);
+      var internal = typeof href === "string" && href.charAt(0) === "/" && href.indexOf("//") !== 0;
+      if (!abs && !internal) continue;
+      out.push({
+        title: item.title,
+        href: abs || href,
+        external: Boolean(abs)
+      });
+    }
+    return out;
   }
 
   function affiliateLinks(book, country) {
@@ -206,6 +264,7 @@
     resolveCountry: resolveCountry,
     visibleItems: visibleItems,
     retailerLinks: retailerLinks,
+    amazonGoHref: amazonGoHref,
     affiliateLinks: affiliateLinks,
     httpsUrl: httpsUrl,
     countryFromVisitorContext: countryFromVisitorContext,

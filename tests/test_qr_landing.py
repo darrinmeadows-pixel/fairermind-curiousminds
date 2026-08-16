@@ -47,16 +47,34 @@ assert 'href="/"' in html
 assert 'href="/#about"' in html
 assert 'href="mailto:hello@fairermind.com"' in html
 assert "cm-locale.js" in html
+assert "cm-analytics.js" in html
+assert 'data-track-page-view="true"' in html
+assert 'data-track-source="qr"' in html
+assert 'data-book-id="CM-Y05to10-STO-SCI-BEACH"' in html
 assert "Country or region" in html
 assert 'name="country"' in html
 assert 'action="/q/5-10/fish-breathe-underwater/"' in html
 assert "q/fish-breathe-underwater\"" not in html.replace("5-10/fish-breathe-underwater", "")
 assert "source=book-qr" not in html
 
+assert (
+    'href="/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&amp;format=paperback&amp;src=qr"'
+    in html
+)
+assert (
+    'href="/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&amp;format=kindle&amp;src=qr"'
+    in html
+)
+assert "Paperback — Amazon UK" in html
+assert "Kindle — Amazon UK" in html
+assert "amazon.co.uk/dp/" not in html
+assert "https://www.amazon." not in html
+
 noscript_html = re.sub(r"<script[\s\S]*?</script>", "", html, flags=re.I)
 assert "Why Can Fish Breathe Underwater?" in noscript_html
 assert "ages 5–10 edition" in noscript_html
 assert "Explore Curious Minds" in noscript_html
+assert "Paperback — Amazon UK" in noscript_html
 
 for forbidden in [
     "Coming soon",
@@ -68,7 +86,6 @@ for forbidden in [
     "Where to find this book",
     "affiliate",
     "Buy now",
-    "Amazon",
     "bit.ly",
     "tinyurl",
 ]:
@@ -80,7 +97,12 @@ assert book["parent_carer_guidance"] == []
 assert book["same_age_books"] == []
 assert book["similar_science_books"] == []
 assert book["similar_nature_books"] == []
-assert book["retailers_by_market"] == {}
+assert book["amazon_live"] is True
+assert len(book["retailers_by_market"]["GB"]) == 2
+assert book["retailers_by_market"]["GB"][0]["format"] == "paperback"
+assert book["retailers_by_market"]["GB"][0]["href"] == "https://www.amazon.co.uk/dp/B0HFFYSJPY"
+assert book["retailers_by_market"]["GB"][1]["format"] == "kindle"
+assert book["retailers_by_market"]["GB"][1]["href"] == "https://www.amazon.co.uk/dp/B0HFF176XT"
 assert book["affiliate_links_by_market"] == {}
 assert book["affiliate_authorised"] is False
 assert i18n["language"] == "en-GB"
@@ -94,12 +116,55 @@ assert "id=\"language-select\"" not in html
 assert "CuriousMindsBooks" not in html
 assert "FINAL-BOOK" not in html
 
+moon = catalogue["books"]["CM-Y02to05-STO-SCI-MOON"]
+assert moon["id"] == "CM-Y02to05-STO-SCI-MOON"
+assert "Why Does the Moon Change Shape?" in moon["title"]
+assert moon["amazon_live"] is True
+assert len(moon["retailers_by_market"]["GB"]) == 1
+assert moon["retailers_by_market"]["GB"][0]["format"] == "paperback"
+assert moon["retailers_by_market"]["GB"][0]["href"] == "https://www.amazon.co.uk/dp/B0HDSXDYF4"
+assert "CM001" not in catalogue["books"]
+assert "CM002" not in catalogue["books"]
+
+index_html = read("index.html")
+assert 'data-book-id="CM-Y02to05-STO-SCI-MOON"' in index_html
+assert "Now available" in index_html
+assert "Preparing for publication" not in index_html
+assert (
+    'href="/go/amazon/CM-Y02to05-STO-SCI-MOON?market=GB&amp;format=paperback&amp;src=home"'
+    in index_html
+)
+assert "Paperback — Amazon UK" in index_html
+assert "format=kindle" not in index_html
+assert "amazon.co.uk/dp/" not in index_html
+assert "https://www.amazon." not in index_html
+assert "We count book-page views and shop-link clicks in aggregate" in index_html
+assert "gtag(" not in index_html.lower()
+assert "googletagmanager" not in index_html.lower()
+
+routes = load_json("_routes.json")
+assert "/api/visitor-context" in routes["include"]
+assert "/api/events" in routes["include"]
+assert "/go/amazon/*" in routes["include"]
+assert os.path.isfile(os.path.join(ROOT, "functions", "api", "events.js"))
+assert os.path.isfile(os.path.join(ROOT, "functions", "go", "amazon", "[bookId].js"))
+assert os.path.isfile(os.path.join(ROOT, "functions", "lib", "cm-events.js"))
+assert os.path.isfile(os.path.join(ROOT, "js", "cm-analytics.js"))
+
+headers = read("_headers")
+assert "/api/events" in headers
+assert "/go/amazon/*" in headers
+assert "Cache-Control: private, no-store" in headers
+
+# The visual page must still render from static files when the Function is absent.
+assert 'id="country-select"' in html
+assert "Use automatic region" in html
+assert 'id="qr-landing"' in html
+
 js = read("js/cm-qr-landing.js")
 locale_js = read("js/cm-locale.js")
+analytics_js = read("js/cm-analytics.js")
 function_js = read("functions/api/visitor-context.js")
-headers = read("_headers")
-routes = load_json("_routes.json")
-
 assert "/cdn-cgi/trace" not in js
 assert "/cdn-cgi/trace" not in locale_js
 assert "/cdn-cgi/trace" not in function_js
@@ -108,15 +173,12 @@ assert "/api/visitor-context" in js
 assert "countryFromVisitorContextText" in locale_js
 assert "request.cf.country" in function_js
 assert "console.log" not in function_js
-assert "Cache-Control: private, no-store" in headers
-assert routes["include"] == ["/api/visitor-context"]
+assert "document.cookie" not in analytics_js
+assert "gtag" not in analytics_js.lower()
+assert "/api/events" in analytics_js
+assert routes["include"] == ["/api/visitor-context", "/api/events", "/go/amazon/*"]
 assert os.path.isfile(os.path.join(ROOT, "functions", "api", "visitor-context.js"))
 assert not os.path.exists(os.path.join(ROOT, "functions", "lib", "country.js"))
-
-# The visual page must still render from static files when the Function is absent.
-assert 'id="country-select"' in html
-assert "Use automatic region" in html
-assert 'id="qr-landing"' in html
 
 try:
     from urllib.error import HTTPError, URLError

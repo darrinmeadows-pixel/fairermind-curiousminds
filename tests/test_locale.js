@@ -172,7 +172,20 @@ assert.strictEqual(country({
   detectedCountry: locale.countryFromVisitorContextText("{")
 }).country, "INTL");
 
-assert.deepStrictEqual(locale.retailerLinks(book, "GB"), []);
+assert.deepStrictEqual(locale.retailerLinks(book, "GB", { source: "qr" }), [
+  {
+    title: "Paperback — Amazon UK",
+    href: "/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&format=paperback&src=qr",
+    external: false,
+    format: "paperback"
+  },
+  {
+    title: "Kindle — Amazon UK",
+    href: "/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&format=kindle&src=qr",
+    external: false,
+    format: "kindle"
+  }
+]);
 assert.deepStrictEqual(locale.retailerLinks(book, "US"), []);
 assert.deepStrictEqual(locale.retailerLinks(book, "INTL"), []);
 assert.deepStrictEqual(locale.affiliateLinks(book, "GB"), []);
