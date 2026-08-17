@@ -2,9 +2,8 @@
  * GET /api/admin/analytics?range=30d&book_id=CM-...
  * Server-side Analytics Engine report. Aggregate book interest only.
  *
- * Requires Cloudflare Access in front of /admin/* and /api/admin/*
- * (dashboard). Optional CM_ADMIN_ACCESS_REQUIRED=true rejects requests
- * missing Cf-Access-Jwt-Assertion after Access is configured.
+ * Requires a signed __Host- admin session cookie (see cm-admin-auth.js).
+ * Cloudflare Access / Zero Trust is not used.
  *
  * Query credentials (Pages secrets — never sent to the browser):
  *   CM_AE_ACCOUNT_ID
@@ -13,9 +12,9 @@
  *   CM_AE_DATASET     (default curious_minds_events)
  */
 
+import { verifyAdminSession } from "../../lib/cm-admin-auth.js";
 import {
   AE_DATASET_DEFAULT,
-  adminAccessAllowed,
   buildAnalyticsReport,
   buildAnalyticsSql,
   assertAggregateOnlyReport,
@@ -46,9 +45,12 @@ export async function onRequestGet(context) {
   var request = context.request;
   var env = context.env || {};
 
-  var access = adminAccessAllowed(env, request);
-  if (!access.ok) {
-    return json(401, { ok: false, reason: "access_required" });
+  var session = await verifyAdminSession(env, request);
+  if (!session.ok) {
+    return json(session.status || 401, {
+      ok: false,
+      reason: session.reason || "auth_required"
+    });
   }
 
   var url = new URL(request.url);

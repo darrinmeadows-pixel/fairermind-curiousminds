@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Private Curious Minds operator sign-in.">
+  <title>Sign in | Curious Minds Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/admin-analytics.css">
+</head>
+<body class="admin-analytics-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header admin-header">
+    <div class="container site-header__inner">
+      <div class="brand">
+        <a class="brand__logo-link" href="/" aria-label="Curious Minds home">
+          <img
+            class="brand__logo"
+            src="/assets/logos/FairerMind-CuriousMinds.png"
+            alt=""
+            width="66"
+            height="66"
+          >
+        </a>
+        <span class="brand__lockup">
+          <span class="brand__wordmark">
+            <span class="brand__fairer">Fairer</span><span class="brand__mind">Mind</span>
+          </span>
+          <span class="brand__sep" aria-hidden="true">·</span>
+          <span class="brand__product">Curious Minds</span>
+        </span>
+      </div>
+      <p class="admin-badge">Admin</p>
+    </div>
+  </header>
+
+  <main id="main" class="admin-main">
+    <div class="container">
+      <header class="admin-hero">
+        <p class="eyebrow">Curious Minds</p>
+        <h1>Sign in</h1>
+        <p class="admin-lead">
+          This private report is for FairerMind operators. It shows aggregate book interest only.
+        </p>
+      </header>
+
+      <form class="admin-login-form" method="post" action="/api/admin/login">
+        <label for="passphrase">Passphrase</label>
+        <input
+          id="passphrase"
+          name="passphrase"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+        <button type="submit" class="btn btn--primary">Sign in</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer admin-footer">
+    <div class="container">
+      <p class="footer-privacy">
+        This private report uses aggregate first-party events only. It does not identify visitors.
+      </p>
+      <p class="footer-copy">
+        Copyright &copy; 2026 FairerMind<br>
+        All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

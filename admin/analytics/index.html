@@ -33,7 +33,12 @@
           <span class="brand__product">Curious Minds</span>
         </span>
       </div>
-      <p class="admin-badge">Admin</p>
+      <div class="admin-header__actions">
+        <p class="admin-badge">Admin</p>
+        <form class="admin-logout" method="post" action="/api/admin/logout">
+          <button type="submit" class="btn btn--ghost">Log out</button>
+        </form>
+      </div>
     </div>
   </header>
 

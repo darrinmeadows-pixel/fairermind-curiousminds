@@ -179,7 +179,8 @@ assert "/api/events" in analytics_js
 assert routes["include"] == [
     "/api/visitor-context",
     "/api/events",
-    "/api/admin/analytics",
+    "/api/admin/*",
+    "/admin/*",
     "/go/amazon/*",
 ]
 assert os.path.isfile(os.path.join(ROOT, "functions", "api", "visitor-context.js"))

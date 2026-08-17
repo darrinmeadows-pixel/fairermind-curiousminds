@@ -17,6 +17,53 @@
   text-transform: uppercase;
 }
 
+.admin-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.admin-logout {
+  margin: 0;
+}
+
+.admin-logout .btn {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8125rem;
+}
+
+.admin-login-form {
+  max-width: 24rem;
+  margin: var(--space-lg) 0 0;
+  padding: var(--space-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-login-form label {
+  display: block;
+  margin: 0 0 var(--space-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.admin-login-form input[type="password"] {
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--space-sm);
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 1rem;
+}
+
+.admin-login-form .btn {
+  width: 100%;
+}
+
 .admin-main {
   padding: var(--space-lg) 0 var(--space-2xl);
 }

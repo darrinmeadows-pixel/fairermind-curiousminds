@@ -6,7 +6,6 @@ import {
   AE_DATASET_DEFAULT,
   AE_FIELD_MAPPING,
   DEFAULT_REPORT_RANGE,
-  adminAccessAllowed,
   assertAggregateOnlyReport,
   buildAnalyticsReport,
   buildAnalyticsSql,
@@ -167,25 +166,24 @@ assert.equal(
   false
 );
 
-const denied = adminAccessAllowed(
-  { CM_ADMIN_ACCESS_REQUIRED: "true" },
-  { headers: { get: () => null } }
+assert.equal(/adminAccessAllowed|accessJwtPresent/.test(reportFn), false);
+assert.equal(/CM_ADMIN_ACCESS_REQUIRED|Cf-Access-Jwt-Assertion/.test(reportFn), false);
+assert.match(reportFn, /verifyAdminSession/);
+assert.equal(
+  /adminAccessAllowed|accessJwtPresent|CM_ADMIN_ACCESS_REQUIRED|Cf-Access-Jwt-Assertion/.test(
+    fs.readFileSync(path.join(root, "functions/lib/cm-analytics-report.js"), "utf8")
+  ),
+  false
 );
-assert.equal(denied.ok, false);
-const allowed = adminAccessAllowed(
-  { CM_ADMIN_ACCESS_REQUIRED: "true" },
-  { headers: { get: (name) => (name === "Cf-Access-Jwt-Assertion" ? "jwt" : null) } }
-);
-assert.equal(allowed.ok, true);
-assert.equal(adminAccessAllowed({}, { headers: { get: () => null } }).ok, true);
 
 assert.deepEqual(routes.include, [
   "/api/visitor-context",
   "/api/events",
-  "/api/admin/analytics",
+  "/api/admin/*",
+  "/admin/*",
   "/go/amazon/*"
 ]);
-assert.match(headers, /\/api\/admin\/analytics/);
+assert.match(headers, /\/api\/admin\/\*/);
 assert.match(headers, /\/admin\/\*/);
 assert.match(headers, /noindex/);
 
@@ -196,6 +194,8 @@ assert.equal(/api\.cloudflare\.com/i.test(adminHtml + adminJs), false);
 assert.equal(/CM_AE_API_TOKEN|CLOUDFLARE_API_TOKEN/i.test(adminJs), false);
 assert.equal(/document\.cookie/i.test(adminJs), false);
 assert.match(adminJs, /\/api\/admin\/analytics/);
+assert.match(adminJs, /\/admin\/login\//);
+assert.match(adminHtml, /\/api\/admin\/logout/);
 
 assert.match(reportFn, /queryAnalyticsEngineSql/);
 assert.match(reportFn, /CM_AE_ACCOUNT_ID/);

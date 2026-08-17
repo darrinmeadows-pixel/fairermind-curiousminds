@@ -216,11 +216,16 @@
       headers: { Accept: "application/json" }
     })
       .then(function (res) {
+        if (res.status === 401) {
+          window.location.replace("/admin/login/");
+          return null;
+        }
         return res.json().then(function (body) {
           return { ok: res.ok, status: res.status, body: body };
         });
       })
       .then(function (result) {
+        if (!result) return;
         if (!result.ok || !result.body || result.body.ok !== true) {
           var reason =
             result.body && result.body.reason

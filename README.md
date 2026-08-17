@@ -24,6 +24,8 @@ Canonical **publishing book IDs** are used on purpose for catalogue and analytic
   - `/api/visitor-context` — coarse country/market detection (`request.cf.country` only)
   - `/api/events` — aggregate `page_view` / `amazon_click` events
   - `/go/amazon/:bookId` — catalogue-only Amazon redirect with click recording
+  - `/admin/login/` and `/api/admin/*` — private operator report authentication
+  - `/admin/analytics/` and `/api/admin/analytics` — private aggregate report
 - Self-hosted Montserrat (no Google Fonts or CDN fonts)
 
 ## Book status (website)
@@ -117,7 +119,31 @@ If analytics is unavailable, a valid Amazon redirect still proceeds. If no catal
 
 Local static preview and unbound Functions degrade gracefully (`binding_unavailable`). Site pages still render.
 
-`_routes.json` (deployed) includes `/api/visitor-context`, `/api/events`, and `/go/amazon/*`.
+`_routes.json` (deployed) includes `/api/visitor-context`, `/api/events`, `/api/admin/*`, `/admin/*`, and `/go/amazon/*`.
+
+### Private admin report
+
+`/admin/analytics/` and `/api/admin/analytics` are a single-operator aggregate report. They are not part of the public site.
+
+Authentication is application-level (Pages Functions + encrypted Pages secrets). Cloudflare Zero Trust / Access is not used.
+
+Encrypted Pages secret **names** (values stay in the dashboard only):
+
+| Secret | Purpose |
+|--------|---------|
+| `CM_ADMIN_PASSPHRASE` | Operator sign-in passphrase |
+| `CM_ADMIN_SESSION_SECRET` | HMAC key for session cookies (at least 32 bytes; `openssl rand -hex 32`) |
+| `CM_AE_ACCOUNT_ID` | Analytics Engine SQL query (server only) |
+| `CM_AE_API_TOKEN` | Analytics Engine SQL query (server only) |
+| `CM_AE_DATASET` | Optional; defaults to `curious_minds_events` |
+
+Sessions use an HttpOnly `__Host-` cookie, eight-hour lifetime. The browser never receives passphrases, session secrets, or Analytics Engine credentials.
+
+`python3 -m http.server` does not run Functions, so it cannot enforce this login gate. Treat local static preview as unauthenticated HTML only.
+
+If Functions invocation allowance is exhausted, Pages **Runtime → Fail open / closed** must be **fail closed** so `/admin/analytics/` is not served as a static file.
+
+Do not set `CM_AE_ACCOUNT_ID` / `CM_AE_API_TOKEN` until unauthenticated `/api/admin/analytics` returns 401 (or 503 if admin secrets are missing). `CM_ADMIN_ACCESS_REQUIRED` is obsolete and must not bypass cookie auth.
 
 ## Local preview
 
@@ -133,7 +159,7 @@ Permanent Book 002 QR destination (local, ages 5–10 edition):
 
 [http://127.0.0.1:8081/q/5-10/fish-breathe-underwater/](http://127.0.0.1:8081/q/5-10/fish-breathe-underwater/)
 
-This ordinary static server cannot execute Cloudflare Pages Functions. Country detection falls back to `INTL`. `/api/events` and `/go/amazon/*` return 404 locally unless you use `wrangler pages dev`. Shop buttons still appear in HTML; clicking them only works in a Pages/Functions environment.
+This ordinary static server cannot execute Cloudflare Pages Functions. Country detection falls back to `INTL`. `/api/events` and `/go/amazon/*` return 404 locally unless you use `wrangler pages dev`. Shop buttons still appear in HTML; clicking them only works in a Pages/Functions environment. `/admin/analytics/` HTML is also served without authentication on this static server.
 
 Checks:
 
@@ -141,6 +167,8 @@ Checks:
 node tests/test_locale.js
 node tests/test_visitor_context.mjs
 node tests/test_cm_events.mjs
+node tests/test_cm_analytics_report.mjs
+node tests/test_cm_admin_auth.mjs
 python3 tests/test_qr_landing.py
 ```
 

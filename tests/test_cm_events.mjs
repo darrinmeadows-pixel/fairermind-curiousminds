@@ -430,7 +430,8 @@ assert.equal(/amazon_click/i.test(analyticsJs), false);
 assert.deepEqual(routes.include, [
   "/api/visitor-context",
   "/api/events",
-  "/api/admin/analytics",
+  "/api/admin/*",
+  "/admin/*",
   "/go/amazon/*"
 ]);
 assert.match(headers, /\/api\/events/);

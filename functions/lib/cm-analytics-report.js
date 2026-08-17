@@ -335,16 +335,3 @@ export async function queryAnalyticsEngineSql(env, sql) {
     return { ok: false, reason: "sql_query_error" };
   }
 }
-
-export function accessJwtPresent(request) {
-  if (!request || !request.headers || typeof request.headers.get !== "function") return false;
-  var jwt = request.headers.get("Cf-Access-Jwt-Assertion");
-  return Boolean(jwt && String(jwt).trim());
-}
-
-export function adminAccessAllowed(env, request) {
-  var required = env && (env.CM_ADMIN_ACCESS_REQUIRED === "1" || env.CM_ADMIN_ACCESS_REQUIRED === "true");
-  if (!required) return { ok: true, enforced: false };
-  if (accessJwtPresent(request)) return { ok: true, enforced: true };
-  return { ok: false, enforced: true, reason: "access_required" };
-}
