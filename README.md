@@ -32,10 +32,18 @@ Canonical **publishing book IDs** are used on purpose for catalogue and analytic
 
 | Book ID | Title | Website status |
 |---------|-------|----------------|
-| `CM-Y02to05-STO-SCI-MOON` | Why Does the Moon Change Shape?: Understanding Moon Phases | Live. Homepage has **Paperback — Amazon UK** via `/go/amazon/...`. Kindle not offered until a verified UK Kindle URL is supplied. |
-| `CM-Y05to10-STO-SCI-BEACH` | Why Can Fish Breathe Underwater? | QR landing live with **Paperback** and **Kindle** Amazon UK buttons via `/go/amazon/...`. |
+| `CM-Y02to05-STO-SCI-MOON` | Why Does the Moon Change Shape?: Understanding Moon Phases | Live. Public page `/books/why-does-the-moon-change-shape/`. Homepage **Paperback — Amazon UK** via `/go/amazon/...`. Kindle not offered until a verified UK Kindle URL is supplied. |
+| `CM-Y05to10-STO-SCI-BEACH` | How Do Fish Breathe Underwater? | Live. Public page `/books/how-do-fish-breathe-underwater/`. QR landing `/q/5-10/fish-breathe-underwater/` remains the printed-code destination. **Paperback** and **Kindle** Amazon UK buttons via `/go/amazon/...`. |
 
 Shop destinations live only in `data/catalogue.json` (`retailers_by_market` + `format`). Page HTML must link to `/go/amazon/<book-id>`, never to raw Amazon product URLs.
+
+Public discovery pages:
+
+- `/books/` — indexable list of live books
+- `/books/why-does-the-moon-change-shape/`
+- `/books/how-do-fish-breathe-underwater/`
+
+`/q/` QR destinations stay noindex and are excluded from `sitemap.xml`. Book search on `/books/` stays hidden until there are at least six public book cards (`MIN_BOOKS_FOR_SEARCH = 6` in `js/cm-books.js`). Catalogue `learning_resources` is an empty array until a real resource exists; items use `{title, audience: families|educators|both, type: discussion|activity|guide|printable, url: /resources/...}`. The Explore More section renders only when at least one valid item is present.
 
 ## Analytics (aggregate only)
 
@@ -169,6 +177,7 @@ node tests/test_visitor_context.mjs
 node tests/test_cm_events.mjs
 node tests/test_cm_analytics_report.mjs
 node tests/test_cm_admin_auth.mjs
+node tests/test_cm_public_books.mjs
 python3 tests/test_qr_landing.py
 ```
 

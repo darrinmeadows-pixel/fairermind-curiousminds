@@ -48,7 +48,7 @@ assert.equal(isKnownBookId(catalogue, "CM002"), false);
 assert.match(catalogue.books[MOON].title, /Why Does the Moon Change Shape/);
 assert.equal(catalogue.books[MOON].amazon_live, true);
 assert.equal(catalogue.books[FISH].amazon_live, true);
-assert.equal(catalogue.books[FISH].title, "Why Can Fish Breathe Underwater?");
+assert.equal(catalogue.books[FISH].title, "How Do Fish Breathe Underwater?");
 
 assert.deepEqual(EVENT_TYPES, ["page_view", "amazon_click"]);
 assert.deepEqual(SOURCES, ["home", "qr", "book", "related"]);
@@ -398,7 +398,18 @@ assert.match(
   /href="\/go\/amazon\/CM-Y02to05-STO-SCI-MOON\?market=GB&amp;format=paperback&amp;src=home"/
 );
 assert.match(indexHtml, /Paperback — Amazon UK/);
-assert.equal(/format=kindle/i.test(indexHtml), false);
+assert.equal(
+  /CM-Y02to05-STO-SCI-MOON\?market=GB&amp;format=kindle/i.test(indexHtml),
+  false
+);
+assert.match(
+  indexHtml,
+  /href="\/go\/amazon\/CM-Y05to10-STO-SCI-BEACH\?market=GB&amp;format=paperback&amp;src=home"/
+);
+assert.match(
+  indexHtml,
+  /href="\/go\/amazon\/CM-Y05to10-STO-SCI-BEACH\?market=GB&amp;format=kindle&amp;src=home"/
+);
 assert.equal(/amazon\.co\.uk\/dp\//i.test(indexHtml), false);
 assert.equal(/https:\/\/www\.amazon\./i.test(indexHtml), false);
 assert.match(indexHtml, /We count book-page views and shop-link clicks in aggregate/);

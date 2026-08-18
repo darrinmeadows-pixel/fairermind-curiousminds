@@ -16,7 +16,7 @@
     "rights": "All Rights Reserved."
   },
   "qr": {
-    "welcome": "You’ve arrived here by scanning the QR code in the ages 5–10 edition of “Why Can Fish Breathe Underwater?”",
+    "welcome": "You’ve arrived here by scanning the QR code in the ages 5–10 edition of “How Do Fish Breathe Underwater?”",
     "eyebrow": "Ages 5–10 edition",
     "region_label": "Country or region",
     "region_automatic": "Automatic",
@@ -33,7 +33,7 @@
       "description": "A gentle family story about noticing patterns, asking questions and discovering that the Moon remains round even when we see different amounts of its sunlit side."
     },
     "CM-Y05to10-STO-SCI-BEACH": {
-      "title": "Why Can Fish Breathe Underwater?",
+      "title": "How Do Fish Breathe Underwater?",
       "age_range": "5–10",
       "age_label": "Ages 5–10",
       "category": "Science and nature",
@@ -47,6 +47,8 @@
     "teacher_notes": "Teacher notes",
     "parent_guidance": "Guidance for parents and carers",
     "where_to_find": "Where to find this book",
-    "affiliate_disclosure": ""
+    "affiliate_disclosure": "",
+    "explore_more": "Explore More",
+    "explore_more_label": "For grown-ups and educators"
   }
 }

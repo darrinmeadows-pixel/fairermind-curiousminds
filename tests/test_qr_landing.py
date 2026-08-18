@@ -36,7 +36,7 @@ assert route["book_id"] == "CM-Y05to10-STO-SCI-BEACH"
 assert book["age_band"] == "5-10"
 assert "html lang=\"en-GB\"" in html
 assert "noindex, follow" in html
-assert "Why Can Fish Breathe Underwater?" in html
+assert "How Do Fish Breathe Underwater?" in html
 assert "ages 5–10 edition" in html
 assert "Ages 5–10" in html
 assert "Science and nature" in html
@@ -44,7 +44,8 @@ assert "rock pools" in html
 assert "gills" in html
 assert "Skip to content" in html
 assert 'href="/"' in html
-assert 'href="/#about"' in html
+assert 'href="/books/"' in html
+assert 'href="/#first-book"' not in html
 assert 'href="mailto:hello@fairermind.com"' in html
 assert "cm-locale.js" in html
 assert "cm-analytics.js" in html
@@ -71,7 +72,7 @@ assert "amazon.co.uk/dp/" not in html
 assert "https://www.amazon." not in html
 
 noscript_html = re.sub(r"<script[\s\S]*?</script>", "", html, flags=re.I)
-assert "Why Can Fish Breathe Underwater?" in noscript_html
+assert "How Do Fish Breathe Underwater?" in noscript_html
 assert "ages 5–10 edition" in noscript_html
 assert "Explore Curious Minds" in noscript_html
 assert "Paperback — Amazon UK" in noscript_html
@@ -91,11 +92,15 @@ for forbidden in [
 ]:
     assert forbidden.lower() not in html.lower(), "unexpected content: %s" % forbidden
 
-assert book["cover_image"] is None
+assert book["cover_image"] == "/assets/books/book-002-fish-cover.jpg"
+assert 'src="/assets/books/book-002-fish-cover.jpg"' in html
+assert os.path.isfile(os.path.join(ROOT, "assets", "books", "book-002-fish-cover.jpg"))
+assert book["public_page"] == "/books/how-do-fish-breathe-underwater/"
+assert book["learning_resources"] == []
 assert book["teacher_notes"] == []
 assert book["parent_carer_guidance"] == []
 assert book["same_age_books"] == []
-assert book["similar_science_books"] == []
+assert book["similar_science_books"][0]["href"] == "/books/why-does-the-moon-change-shape/"
 assert book["similar_nature_books"] == []
 assert book["amazon_live"] is True
 assert len(book["retailers_by_market"]["GB"]) == 2
@@ -135,7 +140,11 @@ assert (
     in index_html
 )
 assert "Paperback — Amazon UK" in index_html
-assert "format=kindle" not in index_html
+assert "CM-Y02to05-STO-SCI-MOON?market=GB&amp;format=kindle" not in index_html
+assert (
+    'href="/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&amp;format=kindle&amp;src=home"'
+    in index_html
+)
 assert "amazon.co.uk/dp/" not in index_html
 assert "https://www.amazon." not in index_html
 assert "We count book-page views and shop-link clicks in aggregate" in index_html
@@ -196,7 +205,7 @@ try:
     )
     body = page.read().decode("utf-8")
     assert page.getcode() == 200
-    assert "Why Can Fish Breathe Underwater?" in body
+    assert "How Do Fish Breathe Underwater?" in body
     assert 'id="country-select"' in body
     assert "ages 5–10 edition" in body
     try:

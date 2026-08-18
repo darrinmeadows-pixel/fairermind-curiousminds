@@ -34,7 +34,7 @@
       <nav class="site-nav" aria-label="Primary">
         <ul class="site-nav__list">
           <li><a href="#about">About</a></li>
-          <li><a href="#first-book">First book</a></li>
+          <li><a href="/books/">Books</a></li>
           <li><a href="#how-we-learn">How we learn</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -63,7 +63,7 @@
           </p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="#about">Discover Curious Minds</a>
-            <a class="btn btn--ghost" href="#first-book">Meet our first book</a>
+            <a class="btn btn--ghost" href="/books/">Explore our books</a>
           </div>
         </div>
         <figure class="hero__visual">
@@ -98,48 +98,89 @@
       </div>
     </section>
 
-    <section class="section section--alt" id="first-book" aria-labelledby="first-book-heading">
+    <section class="section section--alt" id="books" aria-labelledby="books-heading">
       <div class="container">
         <div class="section__header">
-          <p class="eyebrow">Our first adventure</p>
-          <h2 id="first-book-heading">Why Does the Moon Change Shape?</h2>
+          <p class="eyebrow">Our books</p>
+          <h2 id="books-heading">Stories that start with a question</h2>
         </div>
-        <article
-          class="book-teaser"
-          data-book-id="CM-Y02to05-STO-SCI-MOON"
-        >
-          <figure class="book-teaser__visual" aria-hidden="true">
-            <img
-              src="assets/logos/FairerMind-CuriousMinds.png"
-              alt=""
-              width="140"
-              height="140"
-            >
-          </figure>
-          <div class="book-teaser__content">
-            <p class="eyebrow book-teaser__eyebrow">First book</p>
-            <h3 class="book-teaser__title">Why Does the Moon Change Shape?</h3>
-            <span class="book-badge">Now available</span>
-            <p>
-              Hannah notices that the Moon seems to change shape. With Rosie, Mum and Lucky,
-              she watches, draws and experiments until the pattern begins to make sense.
-            </p>
-            <ul class="book-meta">
-              <li>Ages 2–5</li>
-              <li>Story-led science</li>
-            </ul>
-            <p>
-              A gentle family story about noticing patterns, asking questions and discovering
-              that the Moon remains round even when we see different amounts of its sunlit side.
-            </p>
-            <div class="book-purchase hero__actions" aria-label="Buy Why Does the Moon Change Shape?">
-              <a
-                class="btn btn--primary"
-                href="/go/amazon/CM-Y02to05-STO-SCI-MOON?market=GB&amp;format=paperback&amp;src=home"
-              >Paperback — Amazon UK</a>
+        <div class="books-grid">
+          <article
+            class="book-card"
+            data-book-id="CM-Y02to05-STO-SCI-MOON"
+          >
+            <div class="book-card__link">
+              <figure class="book-cover">
+                <img
+                  src="assets/books/book-001-moon-cover.jpg"
+                  alt="Front cover of Why Does the Moon Change Shape?: Understanding Moon Phases"
+                  width="1200"
+                  height="1200"
+                >
+              </figure>
+              <p class="eyebrow">Ages 2–5</p>
+              <h3 class="book-card__title">Why Does the Moon Change Shape?: Understanding Moon Phases</h3>
+              <span class="book-badge">Now available</span>
+              <p class="book-card__description">
+                Hannah notices that the Moon seems to change shape. With Rosie, Mum and Lucky,
+                she watches, draws and experiments until the pattern begins to make sense.
+              </p>
+              <ul class="book-meta">
+                <li>Ages 2–5</li>
+                <li>Story-led science</li>
+              </ul>
+              <div class="book-purchase hero__actions" aria-label="Buy Why Does the Moon Change Shape?: Understanding Moon Phases">
+                <a
+                  class="btn btn--primary"
+                  href="/go/amazon/CM-Y02to05-STO-SCI-MOON?market=GB&amp;format=paperback&amp;src=home"
+                >Paperback — Amazon UK</a>
+              </div>
+              <p class="book-card__cta">
+                <a href="/books/why-does-the-moon-change-shape/">View book</a>
+              </p>
             </div>
-          </div>
-        </article>
+          </article>
+
+          <article
+            class="book-card"
+            data-book-id="CM-Y05to10-STO-SCI-BEACH"
+          >
+            <div class="book-card__link">
+              <figure class="book-cover">
+                <img
+                  src="assets/books/book-002-fish-cover.jpg"
+                  alt="Front cover of How Do Fish Breathe Underwater?"
+                  width="1200"
+                  height="1200"
+                >
+              </figure>
+              <p class="eyebrow">Ages 5–10</p>
+              <h3 class="book-card__title">How Do Fish Breathe Underwater?</h3>
+              <span class="book-badge">Now available</span>
+              <p class="book-card__description">
+                A Curious Minds story about exploring rock pools and discovering how fish take
+                oxygen from the water using their gills.
+              </p>
+              <ul class="book-meta">
+                <li>Ages 5–10</li>
+                <li>Science and nature</li>
+              </ul>
+              <div class="book-purchase hero__actions" aria-label="Buy How Do Fish Breathe Underwater?">
+                <a
+                  class="btn btn--primary"
+                  href="/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&amp;format=paperback&amp;src=home"
+                >Paperback — Amazon UK</a>
+                <a
+                  class="btn btn--ghost"
+                  href="/go/amazon/CM-Y05to10-STO-SCI-BEACH?market=GB&amp;format=kindle&amp;src=home"
+                >Kindle — Amazon UK</a>
+              </div>
+              <p class="book-card__cta">
+                <a href="/books/how-do-fish-breathe-underwater/">View book</a>
+              </p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -195,7 +236,7 @@
         <p class="eyebrow">Looking ahead</p>
         <h2 id="ahead-heading">More questions are waiting</h2>
         <p class="section__lead">
-          Future Curious Minds books and resources will explore science, nature, creativity,
+          More Curious Minds books and resources will explore science, nature, creativity,
           practical life lessons and curriculum-linked learning across different age ranges.
         </p>
         <p>
@@ -210,8 +251,9 @@
         <p class="eyebrow">Contact</p>
         <h2 id="contact-heading">Stay curious</h2>
         <p class="section__lead">
-          Our first Curious Minds adventure, <em>Why Does the Moon Change Shape?</em>, is now
-          available. More books and resources will appear here as they are published.
+          Curious Minds books are now available to explore, including
+          <em>Why Does the Moon Change Shape?</em> and
+          <em>How Do Fish Breathe Underwater?</em> More titles will appear here as they are published.
         </p>
         <p>
           <a class="contact-email" href="mailto:hello@fairermind.com">hello@fairermind.com</a>
@@ -243,7 +285,7 @@
         <ul>
           <li><a href="https://fairermind.com/">FairerMind</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#first-book">First book</a></li>
+          <li><a href="/books/">Books</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>

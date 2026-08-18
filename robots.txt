@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /q/
 
-Sitemap: https://curiousminds.fairermind.com/
+Sitemap: https://curiousminds.fairermind.com/sitemap.xml
