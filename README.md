@@ -34,7 +34,7 @@ Canonical **publishing book IDs** are used on purpose for catalogue and analytic
 |---------|-------|----------------|
 | `CM-Y02to05-STO-SCI-MOON` | Why Does the Moon Change Shape?: Understanding Moon Phases | Live. Public page `/books/why-does-the-moon-change-shape/`. Homepage **Paperback — Amazon UK** via `/go/amazon/...`. Kindle not offered until a verified UK Kindle URL is supplied. |
 | `CM-Y05to10-STO-SCI-BEACH` | How Do Fish Breathe Underwater? | Live. Public page `/books/how-do-fish-breathe-underwater/`. QR landing `/q/5-10/fish-breathe-underwater/` remains the printed-code destination. **Paperback** and **Kindle** Amazon UK buttons via `/go/amazon/...`. |
-| `CM-Y05to10-STO-SCI-SHADOWS` | Shadow Adventures | **Outstanding.** Live on KDP (paperback `B0HKMD695L`, Kindle `B0HKDFQKCQ`) but **not yet on this website**. Catalogue, public book page, cover, and shop links required. Do not treat the site as complete while this row is missing. Publishing workflow: `CuriousMindsBooks/docs/publishing/checklists/13-published.md`. |
+| `CM-Y05to10-STO-SCI-SHADOWS` | Shadow Adventures | Live. Public page `/books/shadow-adventures/`. **Paperback** and **Kindle** Amazon UK buttons via `/go/amazon/...`. |
 
 Shop destinations live only in `data/catalogue.json` (`retailers_by_market` + `format`). Page HTML must link to `/go/amazon/<book-id>`, never to raw Amazon product URLs.
 
@@ -43,7 +43,7 @@ Public discovery pages:
 - `/books/` — indexable list of live books
 - `/books/why-does-the-moon-change-shape/`
 - `/books/how-do-fish-breathe-underwater/`
-- *Shadow Adventures* public page — **not created yet** (outstanding catalogue update)
+- `/books/shadow-adventures/`
 
 `/q/` QR destinations stay noindex and are excluded from `sitemap.xml`. Book search on `/books/` stays hidden until there are at least six public book cards (`MIN_BOOKS_FOR_SEARCH = 6` in `js/cm-books.js`). Catalogue `learning_resources` is an empty array until a real resource exists; items use `{title, audience: families|educators|both, type: discussion|activity|guide|printable, url: /resources/...}`. The Explore More section renders only when at least one valid item is present.
 
@@ -201,7 +201,7 @@ Every book that is live on KDP must appear on this site. That is **release Gate 
 
 When adding or changing a title: use the approved published cover (web derivative allowed; no AI substitute), match the live Amazon title/description/age band, shop via `/go/amazon/<book-id>` only, test locally, then verify live after deploy.
 
-**Outstanding:** *Shadow Adventures* (`CM-Y05to10-STO-SCI-SHADOWS`) is live on KDP and missing from `data/catalogue.json` and public book pages.
+*Shadow Adventures* (`CM-Y05to10-STO-SCI-SHADOWS`) is in `data/catalogue.json` and on `/books/shadow-adventures/`. Live-site verification remains after deploy.
 
 ## Suggested release workflow
 

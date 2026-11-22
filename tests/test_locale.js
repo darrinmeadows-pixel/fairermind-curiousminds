@@ -192,10 +192,14 @@ assert.deepStrictEqual(locale.affiliateLinks(book, "GB"), []);
 assert.deepStrictEqual(locale.visibleItems(book.teacher_notes), []);
 assert.deepStrictEqual(locale.visibleItems(book.parent_carer_guidance), []);
 assert.deepStrictEqual(locale.visibleItems(book.same_age_books), []);
-assert.equal(locale.visibleItems(book.similar_science_books).length, 1);
+assert.equal(locale.visibleItems(book.similar_science_books).length, 2);
 assert.equal(
   locale.visibleItems(book.similar_science_books)[0].href,
   "/books/why-does-the-moon-change-shape/"
+);
+assert.equal(
+  locale.visibleItems(book.similar_science_books)[1].href,
+  "/books/shadow-adventures/"
 );
 assert.deepStrictEqual(locale.visibleItems(book.similar_nature_books), []);
 assert.deepStrictEqual(book.learning_resources, []);

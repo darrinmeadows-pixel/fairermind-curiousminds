@@ -451,6 +451,7 @@ assert.match(readme, /CM_EVENTS/);
 assert.match(readme, /format/);
 assert.match(readme, /CM-Y02to05-STO-SCI-MOON/);
 assert.match(readme, /CM-Y05to10-STO-SCI-BEACH/);
+assert.match(readme, /CM-Y05to10-STO-SCI-SHADOWS/);
 
 assert.equal(fs.existsSync(path.join(root, "functions/api/events.js")), true);
 assert.equal(fs.existsSync(path.join(root, "functions/go/amazon/[bookId].js")), true);

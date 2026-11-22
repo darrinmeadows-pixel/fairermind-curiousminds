@@ -19,6 +19,10 @@ const fishPage = fs.readFileSync(
   path.join(root, "books/how-do-fish-breathe-underwater/index.html"),
   "utf8"
 );
+const shadowsPage = fs.readFileSync(
+  path.join(root, "books/shadow-adventures/index.html"),
+  "utf8"
+);
 const indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const qrHtml = fs.readFileSync(
   path.join(root, "q/5-10/fish-breathe-underwater/index.html"),
@@ -34,8 +38,10 @@ const adminAuthSrc = fs.readFileSync(
 
 const MOON = "CM-Y02to05-STO-SCI-MOON";
 const FISH = "CM-Y05to10-STO-SCI-BEACH";
+const SHADOWS = "CM-Y05to10-STO-SCI-SHADOWS";
 const moonCoverRel = "assets/books/book-001-moon-cover.jpg";
 const fishCoverRel = "assets/books/book-002-fish-cover.jpg";
+const shadowsCoverRel = "assets/books/book-003-shadow-adventures-cover.jpg";
 
 function sha256(relPath) {
   return createHash("sha256")
@@ -59,12 +65,25 @@ assert.equal(
 );
 assert.equal(catalogue.books[MOON].public_page, "/books/why-does-the-moon-change-shape/");
 assert.equal(catalogue.books[FISH].public_page, "/books/how-do-fish-breathe-underwater/");
+assert.equal(catalogue.books[SHADOWS].public_page, "/books/shadow-adventures/");
+assert.equal(catalogue.books[SHADOWS].title, "Shadow Adventures");
+assert.equal(
+  catalogue.books[SHADOWS].retailers_by_market.GB[0].href,
+  "https://www.amazon.co.uk/dp/B0HKMD695L"
+);
+assert.equal(
+  catalogue.books[SHADOWS].retailers_by_market.GB[1].href,
+  "https://www.amazon.co.uk/dp/B0HKDFQKCQ"
+);
 assert.deepEqual(catalogue.books[MOON].learning_resources, []);
 assert.deepEqual(catalogue.books[FISH].learning_resources, []);
+assert.deepEqual(catalogue.books[SHADOWS].learning_resources, []);
 assert.equal(catalogue.books[MOON].cover_image, "/" + moonCoverRel);
 assert.equal(catalogue.books[FISH].cover_image, "/" + fishCoverRel);
+assert.equal(catalogue.books[SHADOWS].cover_image, "/" + shadowsCoverRel);
 assert.equal(catalogue.books[MOON].cover_display, "square");
 assert.equal(catalogue.books[FISH].cover_display, "square");
+assert.equal(catalogue.books[SHADOWS].cover_display, "square");
 
 assert.equal(
   sha256(moonCoverRel),
@@ -74,6 +93,10 @@ assert.equal(
   sha256(fishCoverRel),
   "32dab1df92000c63482cbd45a69cf94989e836bd174173d63c864ca03ef338d0"
 );
+assert.equal(
+  sha256(shadowsCoverRel),
+  "5d920be90ca30f754b3fb3e69ae95f9f064a20c2a3db79cc285ef860c9fddcc7"
+);
 
 const stylesCss = fs.readFileSync(path.join(root, "css/styles.css"), "utf8");
 const coverCorpus = [
@@ -81,6 +104,7 @@ const coverCorpus = [
   booksIndex,
   moonPage,
   fishPage,
+  shadowsPage,
   qrHtml,
   stylesCss,
   JSON.stringify(catalogue)
@@ -117,16 +141,26 @@ assert.match(
   fishPage,
   /"image": "https:\/\/curiousminds.fairermind.com\/assets\/books\/book-002-fish-cover\.jpg"/
 );
+assert.match(
+  shadowsPage,
+  /og:image" content="https:\/\/curiousminds.fairermind.com\/assets\/books\/book-003-shadow-adventures-cover\.jpg"/
+);
+assert.match(
+  shadowsPage,
+  /"image": "https:\/\/curiousminds.fairermind.com\/assets\/books\/book-003-shadow-adventures-cover\.jpg"/
+);
 assert.match(indexHtml, /src="assets\/books\/book-001-moon-cover\.jpg"/);
 assert.match(indexHtml, /src="assets\/books\/book-002-fish-cover\.jpg"/);
+assert.match(indexHtml, /src="assets\/books\/book-003-shadow-adventures-cover\.jpg"/);
 assert.match(booksIndex, /src="\/assets\/books\/book-001-moon-cover\.jpg"/);
 assert.match(booksIndex, /src="\/assets\/books\/book-002-fish-cover\.jpg"/);
+assert.match(booksIndex, /src="\/assets\/books\/book-003-shadow-adventures-cover\.jpg"/);
 assert.match(qrHtml, /src="\/assets\/books\/book-002-fish-cover\.jpg"/);
 
 const coverRefRe =
   /(?:src="\/?|content="https:\/\/curiousminds\.fairermind\.com\/|"image": "https:\/\/curiousminds\.fairermind\.com\/|cover_image": "\/)(assets\/books\/[^"]+)/g;
 const coverRefs = new Set();
-for (const text of [indexHtml, booksIndex, moonPage, fishPage, qrHtml, JSON.stringify(catalogue)]) {
+for (const text of [indexHtml, booksIndex, moonPage, fishPage, shadowsPage, qrHtml, JSON.stringify(catalogue)]) {
   coverRefRe.lastIndex = 0;
   let match;
   while ((match = coverRefRe.exec(text))) {
@@ -135,7 +169,11 @@ for (const text of [indexHtml, booksIndex, moonPage, fishPage, qrHtml, JSON.stri
 }
 assert.deepEqual(
   [...coverRefs].sort(),
-  ["assets/books/book-001-moon-cover.jpg", "assets/books/book-002-fish-cover.jpg"]
+  [
+    "assets/books/book-001-moon-cover.jpg",
+    "assets/books/book-002-fish-cover.jpg",
+    "assets/books/book-003-shadow-adventures-cover.jpg"
+  ]
 );
 for (const rel of coverRefs) {
   assert.equal(fs.existsSync(path.join(root, rel)), true, rel);
@@ -150,25 +188,35 @@ assert.match(
   fishPage,
   /rel="canonical" href="https:\/\/curiousminds.fairermind.com\/books\/how-do-fish-breathe-underwater\/"/
 );
+assert.match(
+  shadowsPage,
+  /rel="canonical" href="https:\/\/curiousminds.fairermind.com\/books\/shadow-adventures\/"/
+);
 assert.match(moonPage, /application\/ld\+json/);
 assert.match(fishPage, /application\/ld\+json/);
+assert.match(shadowsPage, /application\/ld\+json/);
 assert.match(moonPage, /og:title/);
 assert.match(fishPage, /og:image/);
-assert.equal(/noindex/i.test(booksIndex + moonPage + fishPage), false);
+assert.match(shadowsPage, /og:image/);
+assert.equal(/noindex/i.test(booksIndex + moonPage + fishPage + shadowsPage), false);
 assert.match(qrHtml, /noindex, follow/);
 assert.match(qrHtml, /href="\/books\/"/);
 assert.equal(/#first-book/.test(qrHtml), false);
 
 assert.match(moonPage, /Front cover of Why Does the Moon Change Shape/);
 assert.match(fishPage, /Front cover of How Do Fish Breathe Underwater\?/);
+assert.match(shadowsPage, /Front cover of Shadow Adventures/);
 assert.match(booksIndex, /alt="Front cover of Why Does the Moon Change Shape/);
 assert.match(booksIndex, /alt="Front cover of How Do Fish Breathe Underwater\?/);
+assert.match(booksIndex, /alt="Front cover of Shadow Adventures"/);
 assert.equal(/alt=""/g.test(moonPage.match(/book-cover[\s\S]*?>/)[0] || ""), false);
 
 assert.match(moonPage, /data-track-page-view="true"/);
 assert.match(moonPage, /data-track-source="book"/);
 assert.match(fishPage, /data-track-page-view="true"/);
 assert.match(fishPage, /data-track-source="book"/);
+assert.match(shadowsPage, /data-track-page-view="true"/);
+assert.match(shadowsPage, /data-track-source="book"/);
 assert.match(
   moonPage,
   /href="\/go\/amazon\/CM-Y02to05-STO-SCI-MOON\?market=GB&amp;format=paperback&amp;src=book"/
@@ -183,11 +231,20 @@ assert.match(
   /href="\/go\/amazon\/CM-Y05to10-STO-SCI-BEACH\?market=GB&amp;format=kindle&amp;src=book"/
 );
 assert.match(
+  shadowsPage,
+  /href="\/go\/amazon\/CM-Y05to10-STO-SCI-SHADOWS\?market=GB&amp;format=paperback&amp;src=book"/
+);
+assert.match(
+  shadowsPage,
+  /href="\/go\/amazon\/CM-Y05to10-STO-SCI-SHADOWS\?market=GB&amp;format=kindle&amp;src=book"/
+);
+assert.match(
   qrHtml,
   /href="\/go\/amazon\/CM-Y05to10-STO-SCI-BEACH\?market=GB&amp;format=kindle&amp;src=qr"/
 );
 assert.match(indexHtml, /href="\/books\/"/);
 assert.match(indexHtml, /How Do Fish Breathe Underwater\?/);
+assert.match(indexHtml, /Shadow Adventures/);
 assert.equal(/First book/.test(indexHtml), false);
 
 function relatedBlock(html) {
@@ -199,6 +256,7 @@ function relatedBlock(html) {
 
 const moonRelated = relatedBlock(moonPage);
 const fishRelated = relatedBlock(fishPage);
+const shadowsRelated = relatedBlock(shadowsPage);
 assert.match(
   moonRelated,
   /<a class="related-book__title" href="\/books\/how-do-fish-breathe-underwater\/">How Do Fish Breathe Underwater\?<\/a>/
@@ -211,6 +269,12 @@ assert.match(
 );
 assert.match(fishRelated, /<p class="related-book__age">Ages 2–5<\/p>/);
 assert.equal(/— ages/i.test(fishRelated), false);
+assert.match(
+  shadowsRelated,
+  /<a class="related-book__title" href="\/books\/how-do-fish-breathe-underwater\/">How Do Fish Breathe Underwater\?<\/a>/
+);
+assert.match(shadowsRelated, /<p class="related-book__age">Ages 5–10<\/p>/);
+assert.equal(/— ages/i.test(shadowsRelated), false);
 assert.match(stylesCss, /\.related-book__age[\s\S]*?white-space:\s*nowrap/);
 assert.equal(/white-space:\s*nowrap/.test(stylesCss.match(/\.related-book__title[\s\S]*?}/)[0]), false);
 
@@ -218,6 +282,7 @@ assert.match(sitemap, /https:\/\/curiousminds.fairermind.com\/</);
 assert.match(sitemap, /https:\/\/curiousminds.fairermind.com\/books\/</);
 assert.match(sitemap, /why-does-the-moon-change-shape/);
 assert.match(sitemap, /how-do-fish-breathe-underwater/);
+assert.match(sitemap, /shadow-adventures/);
 assert.equal(/\/q\//.test(sitemap), false);
 assert.equal(/\/admin\//.test(sitemap), false);
 assert.equal(/\/api\//.test(sitemap), false);
@@ -228,7 +293,7 @@ assert.match(robots, /Disallow: \/q\//);
 assert.match(booksIndex, /id="book-search"/);
 assert.match(booksIndex, /hidden/);
 assert.match(booksIndex, /data-min-books="6"/);
-assert.equal((booksIndex.match(/data-public-book/g) || []).length, 2);
+assert.equal((booksIndex.match(/data-public-book/g) || []).length, 3);
 
 function listingCards(html) {
   return [...html.matchAll(/<article\s+class="book-card"[\s\S]*?<\/article>/g)].map(function (match) {
@@ -251,8 +316,8 @@ assert.equal(/class="book-teaser"/.test(indexHtml), false);
 
 const homeCards = listingCards(indexHtml);
 const bookCards = listingCards(booksIndex);
-assert.equal(homeCards.length, 2);
-assert.equal(bookCards.length, 2);
+assert.equal(homeCards.length, 3);
+assert.equal(bookCards.length, 3);
 homeCards.forEach(assertSharedListingCard);
 bookCards.forEach(assertSharedListingCard);
 bookCards.forEach(function (card) {
@@ -267,6 +332,14 @@ assert.match(
 assert.match(
   homeCards[1],
   /href="\/go\/amazon\/CM-Y05to10-STO-SCI-BEACH\?market=GB&amp;format=kindle&amp;src=home"/
+);
+assert.match(
+  homeCards[2],
+  /href="\/go\/amazon\/CM-Y05to10-STO-SCI-SHADOWS\?market=GB&amp;format=paperback&amp;src=home"/
+);
+assert.match(
+  homeCards[2],
+  /href="\/go\/amazon\/CM-Y05to10-STO-SCI-SHADOWS\?market=GB&amp;format=kindle&amp;src=home"/
 );
 assert.match(stylesCss, /\.book-card__link:link,\s*\n\.book-card__link:visited/);
 assert.match(stylesCss, /\.book-card__link:link \.book-card__title,\s*\n\.book-card__link:visited \.book-card__title/);
@@ -284,6 +357,7 @@ assert.match(stylesCss, /\.book-cover img \{[\s\S]*?object-fit:\s*contain;/);
 const mobileBookCss = stylesCss.split("@media (max-width: 47.99rem)")[1];
 assert.match(moonPage, /class="book-teaser"/);
 assert.match(fishPage, /class="book-teaser"/);
+assert.match(shadowsPage, /class="book-teaser"/);
 assert.match(
   mobileBookCss,
   /\.book-teaser \{[\s\S]*?padding:\s*var\(--space-md\);[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\);/
@@ -292,8 +366,8 @@ assert.match(mobileBookCss, /\.book-teaser__content,\s*\n\s*\.book-teaser__conte
 assert.match(mobileBookCss, /min-width:\s*0;/);
 assert.match(mobileBookCss, /\.book-teaser \.book-purchase \.btn,\s*\n\s*\.book-teaser \.hero__actions \.btn \{[\s\S]*?width:\s*100%;/);
 assert.equal(/margin-left:\s*-/.test(mobileBookCss.split("}")[0] || ""), false);
-assert.equal(/Explore More/.test(moonPage + fishPage), false);
-assert.equal(/coming soon/i.test(moonPage + fishPage + booksIndex), false);
+assert.equal(/Explore More/.test(moonPage + fishPage + shadowsPage), false);
+assert.equal(/coming soon/i.test(moonPage + fishPage + shadowsPage + booksIndex), false);
 
 assert.equal(booksLib.MIN_BOOKS_FOR_SEARCH, 6);
 assert.equal(booksLib.shouldRevealBookSearch(2), false);
@@ -428,6 +502,10 @@ assert.match(section.innerHTML, /Explore More/);
 
 assert.match(eventsSrc, /writeAnalyticsEvent/);
 assert.match(adminAuthSrc, /__Host-cm_admin_session/);
-assert.equal(/Why Can Fish Breathe Underwater/.test(booksIndex + moonPage + fishPage + indexHtml), false);
+assert.equal(
+  /Why Can Fish Breathe Underwater/.test(booksIndex + moonPage + fishPage + shadowsPage + indexHtml),
+  false
+);
+assert.equal(/amazon\.co\.uk\/dp\//.test(indexHtml + booksIndex + moonPage + fishPage + shadowsPage), false);
 
 console.log("cm-public-books tests passed");

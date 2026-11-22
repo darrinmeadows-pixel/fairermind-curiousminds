@@ -24,6 +24,10 @@
         {
           "title": "How Do Fish Breathe Underwater?",
           "href": "/books/how-do-fish-breathe-underwater/"
+        },
+        {
+          "title": "Shadow Adventures",
+          "href": "/books/shadow-adventures/"
         }
       ],
       "similar_nature_books": [],
@@ -61,6 +65,10 @@
         {
           "title": "Why Does the Moon Change Shape?: Understanding Moon Phases",
           "href": "/books/why-does-the-moon-change-shape/"
+        },
+        {
+          "title": "Shadow Adventures",
+          "href": "/books/shadow-adventures/"
         }
       ],
       "similar_nature_books": [],
@@ -87,6 +95,53 @@
       "publication_status": "live",
       "amazon_live": true,
       "notes": "GB paperback and Kindle destinations verified. Shop CTAs must use /go/amazon redirects only. learning_resources items use {title, audience: families|educators|both, type: discussion|activity|guide|printable, url: /resources/...}."
+    },
+    "CM-Y05to10-STO-SCI-SHADOWS": {
+      "id": "CM-Y05to10-STO-SCI-SHADOWS",
+      "title": "Shadow Adventures",
+      "age_band": "5-10",
+      "age_minimum": 5,
+      "age_maximum": 10,
+      "topics": ["science", "nature"],
+      "cover_image": "/assets/books/book-003-shadow-adventures-cover.jpg",
+      "cover_display": "square",
+      "public_page": "/books/shadow-adventures/",
+      "same_age_books": [
+        {
+          "title": "How Do Fish Breathe Underwater?",
+          "href": "/books/how-do-fish-breathe-underwater/"
+        }
+      ],
+      "similar_science_books": [
+        {
+          "title": "How Do Fish Breathe Underwater?",
+          "href": "/books/how-do-fish-breathe-underwater/"
+        }
+      ],
+      "similar_nature_books": [],
+      "teacher_notes": [],
+      "parent_carer_guidance": [],
+      "learning_resources": [],
+      "retailers_by_market": {
+        "GB": [
+          {
+            "title": "Paperback — Amazon UK",
+            "format": "paperback",
+            "href": "https://www.amazon.co.uk/dp/B0HKMD695L"
+          },
+          {
+            "title": "Kindle — Amazon UK",
+            "format": "kindle",
+            "href": "https://www.amazon.co.uk/dp/B0HKDFQKCQ"
+          }
+        ]
+      },
+      "affiliate_links_by_market": {},
+      "affiliate_disclosure": null,
+      "affiliate_authorised": false,
+      "publication_status": "live",
+      "amazon_live": true,
+      "notes": "GB paperback B0HKMD695L and Kindle B0HKDFQKCQ verified live 2026-11-22 as Shadow Adventures (Curious Minds), ages 5–10, ISBN-13 979-8175442145. Shop CTAs must use /go/amazon redirects only. No QR route until a permanent printed QR is verified."
     }
   }
 }

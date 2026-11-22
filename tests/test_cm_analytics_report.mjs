@@ -125,8 +125,8 @@ assert.equal(report.range, "30d");
 assert.equal(report.summary.total_page_views, 4);
 assert.equal(report.summary.total_amazon_clicks, 3);
 assert.equal(report.summary.books_with_activity, 2);
-assert.equal(report.summary.books_in_catalogue, 2);
-assert.equal(report.books.length, 2);
+assert.equal(report.summary.books_in_catalogue, 3);
+assert.equal(report.books.length, 3);
 
 const moon = report.books.find((b) => b.book_id === "CM-Y02to05-STO-SCI-MOON");
 const fish = report.books.find((b) => b.book_id === "CM-Y05to10-STO-SCI-BEACH");
@@ -142,7 +142,7 @@ assert.equal(fish.click_view_pct, 50);
 assert.equal(fish.last_activity, "2026-08-16 19:30:00");
 
 const zeroReport = buildAnalyticsReport(catalogue, [], { range: "all" });
-assert.equal(zeroReport.books.length, 2);
+assert.equal(zeroReport.books.length, 3);
 assert.equal(zeroReport.summary.total_page_views, 0);
 assert.equal(zeroReport.summary.books_with_activity, 0);
 assert.equal(zeroReport.books[0].page_views, 0);

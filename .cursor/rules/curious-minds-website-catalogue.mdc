@@ -16,4 +16,4 @@ When a book, edition, format, cover, description, or purchase link changes:
 - Shop CTAs: `/go/amazon/<book-id>` from `data/catalogue.json` only — never raw Amazon URLs in page HTML.
 - Test locally, then verify the live site after deploy.
 
-**Outstanding:** *Shadow Adventures* (`CM-Y05to10-STO-SCI-SHADOWS`) is live on KDP and is **not** in `data/catalogue.json`. Do not treat the catalogue as complete until that title is listed.
+*Shadow Adventures* (`CM-Y05to10-STO-SCI-SHADOWS`) is in `data/catalogue.json`. Keep every later live KDP title listed the same way.
