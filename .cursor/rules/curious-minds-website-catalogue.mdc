@@ -1,0 +1,19 @@
+---
+description: Curious Minds public site must list every live KDP book
+alwaysApply: true
+---
+
+# Curious Minds website catalogue
+
+This repository is the public site (`curiousminds.fairermind.com`), not the book-production tree.
+
+A live Amazon listing is **not** a complete release until this site is updated. Follow `CuriousMindsBooks/docs/publishing/checklists/13-published.md` (workflow gates 23–26). Do not duplicate that checklist here.
+
+When a book, edition, format, cover, description, or purchase link changes:
+
+- Use the **approved published cover** (a web JPG derivative is allowed). Do not generate substitute cover art.
+- Match the live Amazon title, description, and age range where established.
+- Shop CTAs: `/go/amazon/<book-id>` from `data/catalogue.json` only — never raw Amazon URLs in page HTML.
+- Test locally, then verify the live site after deploy.
+
+**Outstanding:** *Shadow Adventures* (`CM-Y05to10-STO-SCI-SHADOWS`) is live on KDP and is **not** in `data/catalogue.json`. Do not treat the catalogue as complete until that title is listed.
