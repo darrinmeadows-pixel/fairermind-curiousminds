@@ -714,6 +714,22 @@ ul {
   font-weight: var(--weight-semibold);
 }
 
+.site-footer__facebook {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.4rem;
+  margin: 0.35rem 0 0.15rem;
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  border-radius: 4px;
+}
+
+.site-footer__facebook-icon {
+  flex-shrink: 0;
+  display: block;
+}
+
 .footer-privacy {
   margin: 0 0 var(--space-sm);
   font-size: 0.8125rem;
@@ -749,6 +765,10 @@ ul {
   .site-footer__meta {
     text-align: right;
     align-items: flex-end;
+  }
+
+  .site-footer__facebook {
+    align-self: flex-end;
   }
 }
 
